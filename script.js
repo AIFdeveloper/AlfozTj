@@ -449,3 +449,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("languageSwitcher").value = savedLang;
   setLang(savedLang);
 });
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.querySelector(".nav-links");
+
+menuToggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
