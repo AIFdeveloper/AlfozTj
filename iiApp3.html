@@ -181,7 +181,8 @@ button:hover{
 </div>
 
 <script>
-  let voiceEnabled = false;
+
+let voiceEnabled = false;
 let voices = [];
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -197,6 +198,8 @@ function loadVoices() {
   voices = speechSynthesis.getVoices();
 
   const select = document.getElementById("voiceSelect");
+  if (!select) return;
+
   select.innerHTML = "";
 
   voices.forEach((v, i) => {
@@ -210,29 +213,28 @@ function loadVoices() {
 speechSynthesis.onvoiceschanged = loadVoices;
 
 // 📩 SEND MESSAGE
-async function sendMessage(){
+async function sendMessage() {
 
   const input = document.getElementById("input");
   const message = input.value.trim();
-  if(!message) return;
+  if (!message) return;
 
   const messages = document.getElementById("messages");
 
   messages.innerHTML += `<div class="user">👤 ${escapeHtml(message)}</div>`;
-  input.value="";
+  input.value = "";
 
-  const id = "l"+Date.now();
+  const id = "l" + Date.now();
   messages.innerHTML += `<div class="bot" id="${id}">🤖 думает...</div>`;
 
-  try{
-    const res = await fetch("http://localhost:3000/chat", {
+  try {
+
+    const res = await fetch("https://ТВОЙ-СЕРВЕР.onrender.com/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        message: message
-      })
+      body: JSON.stringify({ message })
     });
 
     const data = await res.json();
@@ -243,52 +245,53 @@ async function sendMessage(){
 
     messages.innerHTML += `<div class="bot">🤖 ${escapeHtml(reply)}</div>`;
 
-    if(voiceEnabled){
+    // 🎤 voice
+    if (voiceEnabled) {
       speechSynthesis.cancel();
 
       const speech = new SpeechSynthesisUtterance(reply);
       speech.lang = "ru-RU";
       speech.rate = 1;
 
-      const v = voices[document.getElementById("voiceSelect").value];
-      if(v) speech.voice = v;
+      const v = voices[document.getElementById("voiceSelect")?.value];
+      if (v) speech.voice = v;
 
-      setTimeout(()=>speechSynthesis.speak(speech),100);
+      setTimeout(() => speechSynthesis.speak(speech), 100);
     }
 
     messages.scrollTop = messages.scrollHeight;
 
-  }catch(e){
+  } catch (e) {
     document.getElementById(id).remove();
-    messages.innerHTML += `<div class="bot">❌ ошибка</div>`;
+    messages.innerHTML += `<div class="bot">❌ ошибка сервера</div>`;
   }
 }
 
-// 🔊 toggle voice
-function toggleVoice(){
+// 🔊 voice toggle
+function toggleVoice() {
   voiceEnabled = !voiceEnabled;
   document.getElementById("voiceBtn").textContent = voiceEnabled ? "🔊" : "🔇";
-  if(!voiceEnabled) speechSynthesis.cancel();
+  if (!voiceEnabled) speechSynthesis.cancel();
 }
 
 // 🎤 voice input
-function startVoice(){
-  if(!recognition) return alert("Голос не работает");
+function startVoice() {
+  if (!recognition) return alert("Голос не работает");
 
   recognition.start();
 
-  recognition.onresult = (e)=>{
+  recognition.onresult = (e) => {
     document.getElementById("input").value = e.results[0][0].transcript;
     sendMessage();
   };
 }
 
 // escape HTML
-function escapeHtml(text){
+function escapeHtml(text) {
   return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 </script>
 
