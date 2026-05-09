@@ -2,10 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <!-- google-site-verification=tOGYkJ3O0SAqWBBa0-ollfqDNaaSj8r-FuLdWTQARVk -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alfoz – Образовательный центр</title>
   <meta name="description" content="Курсы для школьников и взрослых: английский, математика, программирование. Онлайн и офлайн." />
-
+  <meta name="google-site-verification" content="1Bxzn2l4hHApCZEsshfW97B2T9NiVCGK4t5ZBvk6RAI" />
   <!-- Шрифты (можно удалить при офлайн-версии) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,15 +27,23 @@
           <span>ALFOZ</span>
         </a>
         <div class="nav-links" role="navigation">
-          <a href="#programs">Курсы</a>
-          <a href="#benefits">Преимущества</a>
-          <a href="#teachers">Преподаватели</a>
-          <a href="#contact">Цены</a>
-          <a href="#contact">Контакты</a>
+          <a href="#programs" id="nav-courses">Курсы</a>
+          <a href="#benefits" id="nav-benefits">Преимущества</a>
+          <a href="#teachers" id="nav-teachers">Преподаватели</a>
+          <a href="BookAlfoz.html" id="nav-contact" target="_blank">Книги</a>
+          <a href="iiApp3.html" target="_blank">ИИ Алфоз</a>
           <!-- <a href="book2.html">Книги</a> -->
           <!-- <a href="testWord7.html">Тест</a> -->
         </div>
-        <a class="btn" href="#contact">Записаться</a>
+        <a class="btn" href="#contact" id="zap">Записаться</a>
+
+                  <div class="lang-select">
+                    <select id="languageSwitcher">
+                      <option value="ru">🇷🇺 Русский</option>
+                      <option value="tj">🇹🇯 Тоҷикӣ</option>
+                    </select>
+                  </div>
+
       </nav>
     </div>
   </header>
@@ -44,16 +53,16 @@
     <div class="container hero-grid">
       <div>
         <span class="tag">Онлайн и офлайн</span>
-        <h1>Образовательный центр для школьников и взрослых</h1>
-        <p>Английский язык, математика, программирование и подготовка к экзаменам. Малые группы, сильные преподаватели, современная методика.</p>
+        <h1 id="hero-title">Образовательный центр для школьников и взрослых</h1>
+        <p id="hero-desc">Английский язык, математика, программирование и подготовка к экзаменам. Малые группы, сильные преподаватели, современная методика.</p>
         <div class="actions">
-          <a class="btn" href="#programs">Смотреть курсы</a>
-          <a class="btn alt" href="#contact">Бесплатное занятие</a>
+          <a class="btn" href="#programs" id="btn-courses">Смотреть курсы</a>
+          <a class="btn alt" href="#contact" id="btn-free">Бесплатное занятие</a>
         </div>
         <div class="stats">
-          <div class="stat"><b>7000+</b><div>выпускников</div></div>
-          <div class="stat"><b>92%</b><div>сдали экзамены</div></div>
-          <div class="stat"><b>4.9/5</b><div>рейтинг</div></div>
+          <div class="stat"><b>7000+</b><div id="stat1">выпускников</div></div>
+          <div class="stat"><b>92%</b><div id="stat2">сдали экзамены</div></div>
+          <div class="stat"><b>4.9/5</b><div id="stat3">рейтинг</div></div>
         </div>
       </div>
       <div>
@@ -65,27 +74,27 @@
   <!-- Курсы -->
   <section id="programs" class="section">
     <div class="container">
-      <h2>Популярные курсы</h2>
+      <h2 id="courses-title">Популярные курсы</h2>
       <div class="grid-3">
         <article class="card program">
-          <span class="tag">6–25+ лет</span>
-          <h3>Английский язык</h3>
-          <p class="meta">3 раза в неделю · 90 мин</p>
-          <p>Коммуникативная методика, подготовка к IELTS/TOEFL, разговорные клубы по субботам.</p>
+          <span class="tag" id="zap13">6–25+ лет</span>
+          <h3 id="course-english">Английский язык</h3>
+          <p class="meta" id="zap2">3 раза в неделю · 90 мин</p>
+          <p id="infocurs1">Коммуникативная методика, подготовка к IELTS/TOEFL, разговорные клубы по субботам.</p>
         </article>
 
         <article class="card program">
-        <span class="tag">6-25+</span>
-        <h3>Русский язык</h3>
-        <p class="meta">3 раза в неделю · 90 мин</p>
-        <p>Грамматика, разговорная практика и развитие письменной речи.</p>
+        <span class="tag"  id="zap14">6-25+ лет</span>
+        <h3 id="course-russian">Русский язык</h3>
+        <p class="meta" id="zap3">3 раза в неделю · 90 мин</p>
+        <p id="infocurs2">Грамматика, разговорная практика и развитие письменной речи.</p>
       </article>
 
        <article class="card program">
-        <span class="tag">6-25+</span>
-        <h3>Корейский язык</h3>
-        <p class="meta">3 раза в неделю · 90 мин</p>
-        <p>Алфавит хангыль, разговорная речь и понимание культуры.</p>
+        <span class="tag" id="zap15">6-25+ лет</span>
+        <h3 id="yaz1">Корейский язык</h3>
+        <p class="meta" id="zap4">3 раза в неделю · 90 мин</p>
+        <p id="infocurs3">Алфавит хангыль, разговорная речь и понимание культуры.</p>
       </article>
        
       </div>
@@ -93,26 +102,26 @@
       <div class="grid-3" style="margin-top:1rem">
 
          <article class="card program">
-        <span class="tag">6-25+</span>
-        <h3>Китайский язык</h3>
-        <p class="meta">3 раза в неделю · 90 мин</p>
-        <p>Разговорная практика, иероглифы и основы делового общения.</p>
+        <span class="tag" id="zap16">6-25+ лет</span>
+        <h3 id="yaz2">Китайский язык</h3>
+        <p class="meta" id="zap5">3 раза в неделю · 90 мин</p>
+        <p id="infocurs4">Разговорная практика, иероглифы и основы делового общения.</p>
       </article>
 
   
 
   <article class="card program">
-    <span class="tag">6-25+</span>
-    <h3>Таджикский язык</h3>
-    <p class="meta">3 раза в неделю · 90 мин</p>
-    <p>Разговорная практика, грамматика и развитие письменной речи.</p>
+    <span class="tag" id="zap17">6-25+ лет</span>
+    <h3 id="yaz3">Таджикский язык</h3>
+    <p class="meta" id="zap6">3 раза в неделю · 90 мин</p>
+    <p id="infocurs5">Разговорная практика, грамматика и развитие письменной речи.</p>
   </article>
 
        <article class="card program">
-    <span class="tag">6-25+</span>
-    <h3>Немецкий язык</h3>
-    <p class="meta">3 раза в неделю · 90 мин</p>
-    <p>Грамматика, разговорный немецкий и подготовка к экзаменам.</p>
+    <span class="tag" id="zap18">6-25+ лет</span>
+    <h3 id="yaz4">Немецкий язык</h3>
+    <p class="meta" id="zap7">3 раза в неделю · 90 мин</p>
+    <p id="infocurs6">Грамматика, разговорный немецкий и подготовка к экзаменам.</p>
   </article>  
 
 
@@ -120,25 +129,25 @@
    <div class="grid-3" style="margin-top:1rem">
       
   <article class="card program">
-    <span class="tag">Детские программы</span>
-    <h3>Подготовка к школе</h3>
-    <p class="meta">5–7 лет · Комплексное развитие</p>
-    <p>Обучение чтению, письму, счёту и развитие логического мышления.</p>
+    <span class="tag" id="zap12">Детские программы</span>
+    <h3 id="yaz5">Подготовка к школе</h3>
+    <p class="meta" id="zap10">5–7 лет · Комплексное развитие</p>
+    <p id="infocurs7">Обучение чтению, письму, счёту и развитие логического мышления.</p>
   </article>
       
 
        <article class="card program">
-          <span class="tag">14+ лет</span>
-          <h3>Программирование</h3>
-          <p class="meta">Python/JS · Проектный подход · Хакатоны</p>
-          <p>Создание сайтов и ботов. Портфолио-проект к окончанию курса.</p>
+          <span class="tag" id="zap11">14+ лет</span>
+          <h3 id="yaz6">Программирование</h3>
+          <p class="meta" id="zap9">Python/JS · Проектный подход · Хакатоны</p>
+          <p id="infocurs8">Создание сайтов и ботов. Портфолио-проект к окончанию курса.</p>
         </article>
 
         <article class="card program">
-          <span class="tag">8–25+ лет</span>
-          <h3>Математика</h3>
-          <p class="meta">3 раза в неделю · 90 мин</p>
-          <p>Разбор типовых задач и индивидуальная траектория для сильных учеников.</p>
+          <span class="tag" id="zap19">8–25+ лет</span>
+          <h3 id="course-math">Математика</h3>
+          <p class="meta" id="zap8">3 раза в неделю · 90 мин</p>
+          <p id="infocurs9">Разбор типовых задач и индивидуальная траектория для сильных учеников.</p>
         </article>
 
      
@@ -154,22 +163,22 @@
         <div class="card feature">
           <i>🎯</i>
           <div>
-            <h3>Индивидуальные цели</h3>
-            <p class="notice">Личная траектория обучения и отчёт для родителей каждый месяц.</p>
+            <h3 id="benefit1">Индивидуальные цели</h3>
+            <p class="notice" id="tulbox">Личная траектория обучения и отчёт для родителей каждый месяц.</p>
           </div>
         </div>
         <div class="card feature">
           <i>👩‍🏫</i>
           <div>
-            <h3>Опытные преподаватели</h3>
-            <p class="notice">Сертификаты CELTA/IELTS, призёры олимпиад, действующие разработчики.</p>
+            <h3 id="benefit2">Опытные преподаватели</h3>
+            <p class="notice" id="tulbox2">Сертификаты CELTA/IELTS, призёры олимпиад, действующие разработчики.</p>
           </div>
         </div>
         <div class="card feature">
           <i>💻</i>
           <div>
-            <h3>Умные технологии</h3>
-            <p class="notice">Личный кабинет, домашки онлайн, записи уроков и прогресс-аналитика.</p>
+            <h3 id="benefit3">Умные технологии</h3>
+            <p class="notice" id="tulbox3">Личный кабинет, домашки онлайн, записи уроков и прогресс-аналитика.</p>
           </div>
         </div>
       </div>
@@ -179,48 +188,48 @@
   <!-- Преподаватели -->
   <section id="teachers" class="section">
     <div class="container">
-      <h2>Наши преподаватели</h2>
+      <h2 id="teachers-title">Наши преподаватели</h2>
       <div class="grid-3">
         <div class="card teacher">
           <img src="free-icon-woman-6889359.png" alt="Преподаватель Анна" />
           <div>
             <h3>Атаханова Саноат</h3>
-            <p class="notice">Английский</p>
+            <p class="notice" id="namepeople9">Английский язык</p>
           </div>
         </div>
         <div class="card teacher">
           <img src="free-icon-business-man-3048127.png" alt="Преподаватель Анна" />
           <div>
             <h3>Гаффоров Абдугафор</h3>
-            <p class="notice">Английский</p>
+            <p class="notice" id="namepeople10">Английский язык</p>
           </div>
         </div>
          <div class="card teacher">
           <img src="free-icon-single-person-5231019.png" alt="Преподаватель Анна" />
           <div>
             <h3>Холматова Мархабо</h3>
-            <p class="notice">Русский язык</p>
+            <p class="notice" id="namepeople11">Русский язык</p>
           </div>
         </div>
          <div class="card teacher">
           <img src="teacher_1921194.png" alt="Преподаватель Анна" />
           <div>
             <h3>Турсунова Саодат</h3>
-            <p class="notice">Таджикский язык </p>
+            <p class="notice" id="namepeople3">Таджикский язык </p>
           </div>
         </div>
          <div class="card teacher">
           <img src="free-icon-boy-4202831.png" alt="Преподаватель Анна" />
           <div>
             <h3>Иномов Муталиб</h3>
-            <p class="notice">Китайский язык</p>
+            <p class="notice" id="namepeople2">Китайский язык</p>
           </div>
         </div>
          <div class="card teacher">
           <img src="free-icon-person-4427398.png" alt="Преподаватель Анна" />
           <div>
             <h3>Акрамов Фарход</h3>
-            <p class="notice">Программирование</p>
+            <p class="notice" id="namepeople6">Программирование</p>
           </div>
         </div>
         <div class="card teacher">
@@ -234,7 +243,7 @@
           <img src="attorney_2310222.png" alt="Преподаватель Нурия" />
           <div>
             <h3>Холикова Мамлакат</h3>
-            <p class="notice">Подготовка к школе </p>
+            <p class="notice" id="namepeople5">Подготовка к школе </p>
           </div>
         </div>
       </div>
@@ -299,7 +308,7 @@
   <!-- Отзывы -->
   <section class="section">
     <div class="container">
-      <h2>Отзывы учеников</h2>
+      <h2 id="ot">Отзывы учеников</h2>
       <div class="testimonials-wrapper">
         <div class="testimonials">
               <blockquote class="card">«Сын стал увереннее в математике уже через месяц занятий.» — <b>Фирдавс</b></blockquote>
@@ -334,28 +343,28 @@
   <!-- FAQ -->
   <section class="section faq">
     <div class="container">
-      <h2>Частые вопросы</h2>
+      <h2 id="menyvapros">Частые вопросы</h2>
       <div class="grid-2">
         <details open>
-          <summary>Как записаться на пробный урок?</summary>
-          <p class="notice">Оставьте заявку в форме ниже, мы свяжемся в течение дня и подберём время.</p>
+          <summary id="menyvapros1">Как записаться на пробный урок?</summary>
+          <p class="notice" id="menyvapros2">Оставьте заявку в форме ниже, мы свяжемся в течение дня и подберём время.</p>
         </details>
         <details>
-          <summary>Есть ли онлайн-занятия?</summary>
-          <p class="notice">Да, все курсы доступны онлайн в Zoom/Meet. Записи уроков сохраняем.</p>
+          <summary id="menyvapros3">Есть ли онлайн-занятия?</summary>
+          <p class="notice" id="menyvapros4">Да, все курсы доступны онлайн в Zoom/Meet. Записи уроков сохраняем.</p>
         </details>
         <details>
-          <summary>Какие уровни набора по английскому?</summary>
-          <p class="notice">От A1 до C1. Перед стартом проводим бесплатное тестирование уровня.</p>
+          <summary id="menyvapros5">Какие уровни набора по английскому?</summary>
+          <p class="notice" id="menyvapros6">От A1 до C1. Перед стартом проводим бесплатное тестирование уровня.</p>
         </details>
         <details>
-          <summary>Можно ли заморозить абонемент?</summary>
-          <p class="notice">Да, до 2 недель в семестр при наличии уважительной причины.</p>
+          <summary id="menyvapros7">Можно ли заморозить абонемент?</summary>
+          <p class="notice" id="menyvapros8">Да, до 2 недель в семестр при наличии уважительной причины.</p>
         </details>
       </div>
     </div>
   </section>
-
+ 
   <!-- Контакты -->
   <section id="contact" class="section contact">
     <div class="container">
@@ -364,15 +373,15 @@
         <form class="card" id="myForm" aria-labelledby="form-title" style="padding:1rem">
           <h3 id="form-title" style="margin-top:0">Запишитесь на бесплатный урок</h3>
           <label>
-            <span class="notice">Ваше имя</span>
+            <span class="notice" id="name-label">Ваше имя</span>
             <input class="input" type="text" name="name" placeholder="Имя" required />
           </label>
           <label>
-            <span class="notice">Телефон (WhatsApp/Telegram)</span>
+            <span class="notice" id="phone-label">Телефон (WhatsApp/Telegram)</span>
             <input class="input" type="tel" name="phone" id="email"  placeholder="+992 …" required />
           </label>
           <label>
-            <span class="notice">Курс</span>
+            <span class="notice" id="course-label">Курс</span>
             <select class="input" name="course" id="courseSelect" required>
                 <option value="">Выберите курс</option>
                 <option value="Английский язык">Английский язык</option>
@@ -396,10 +405,10 @@
             
           </label>
           <label>
-            <span class="notice">Комментарий</span>
+            <span class="notice" id="message-label">Комментарий</span>
             <textarea class="input" name="message" rows="4" placeholder="Удобное время, формат, уровень…"></textarea>
           </label>
-          <button class="btn" type="submit">Отправить</button>
+          <button class="btn" type="submit" id="submit-btn">Отправить</button>
           <p class="notice" id="formNote" role="status" aria-live="polite"></p>
           <p id="status"></p>
         </form>
