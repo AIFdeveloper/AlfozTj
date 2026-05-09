@@ -43,6 +43,65 @@ img {
   margin-inline: auto;
 }
 
+/* //select измнения языка */
+.lang-select {
+  position: relative;
+  display: inline-block;
+}
+
+#languageSwitcher {
+  padding: 8px 35px 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  appearance: none;
+}
+
+/* стрелка */
+.lang-select::after {
+  content: "▼";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 12px;
+  color: #555;
+}
+
+/* hover эффект */
+#languageSwitcher:hover {
+  border-color: #007bff;
+}
+
+
+
+/* 📱 МОБИЛЬНАЯ АДАПТАЦИЯ */
+@media (max-width: 768px) {
+
+  .lang-select {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #languageSwitcher {
+    width: 100%;
+    font-size: 16px; /* важно для мобилок */
+    padding: 10px 40px 10px 12px;
+  }
+
+  /* стрелка чуть больше */
+  .lang-select::after {
+    right: 12px;
+    font-size: 14px;
+  }
+
+}
+/* // */
+
+
 /* Кнопки */
 .btn {
   display: inline-flex;
