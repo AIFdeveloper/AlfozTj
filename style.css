@@ -51,29 +51,6 @@ html, body {
 
 
 
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    right: 10px;
-    background: #0f172a;
-    padding: 15px;
-    border-radius: 10px;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-}
-
-
-
 
 a {
   color: inherit;
