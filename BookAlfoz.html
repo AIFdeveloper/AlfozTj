@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 Book App Alfoz</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  margin: 0;
+}
+
+header {
+  padding: 15px;
+  text-align: center;
+  background: #111827;
+  font-size: 18px;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.book {
+  background: #1e293b;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 12px;
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.book:hover {
+  transform: scale(1.01);
+}
+
+.book img {
+  width: 70px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+small {
+  color: #94a3b8;
+}
+
+.btn {
+  margin-top: 5px;
+  padding: 5px 8px;
+  font-size: 12px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-del {
+  margin-top: 5px;
+  padding: 5px 8px;
+  font-size: 12px;
+  background: #ef4444;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.loading {
+  text-align: center;
+  color: #60a5fa;
+}
+</style>
+</head>
+
+<body>
+
+<header>📚 Book App (Alfoz)</header>
+
+<div class="search-box">
+  <input id="search" placeholder="Названия: Книги(Book)">
+  <button onclick="getBooks()">Поиск</button>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <h3>📖 Результаты</h3>
+    <div id="results"></div>
+    <div id="loading"></div>
+  </div>
+
+  <div class="section">
+    <h3>⭐ Избранное</h3>
+    <div id="fav"></div>
+  </div>
+
+</div>
+
+<script>
+let favorites = JSON.parse(localStorage.getItem("favBooks")) || [];
+
+/* 🌍 перевод RU → EN */
+async function translateText(text) {
+  try {
+    const res = await fetch("https://libretranslate.de/translate", {
+      method: "POST",
+      body: JSON.stringify({
+        q: text,
+        source: "ru",
+        target: "en",
+        format: "text"
+      }),
+      headers: { "Content-Type": "application/json" }
+    });
+
+    const data = await res.json();
+    return data.translatedText;
+  } catch {
+    return text;
+  }
+}
+
+/* 📚 поиск книг */
+async function getBooks() {
+  let query = document.getElementById("search").value.trim();
+
+  if (!query) {
+    alert("Напиши запрос!");
+    return;
+  }
+
+  document.getElementById("loading").innerHTML = "⏳ Поиск...";
+
+  query = await translateText(query);
+
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    document.getElementById("loading").innerHTML = "";
+
+    const container = document.getElementById("results");
+    container.innerHTML = "";
+
+    if (!data.items) {
+      container.innerHTML = "😢 Ничего не найдено";
+      return;
+    }
+
+    data.items
+      .filter(b => b.volumeInfo && b.volumeInfo.title)
+      .slice(0, 10)
+      .forEach(book => {
+
+        const info = book.volumeInfo;
+
+        container.innerHTML += `
+          <div class="book" onclick="openBook('${info.previewLink || info.infoLink}')">
+            <img src="${info.imageLinks?.thumbnail || ''}">
+            <div>
+              <b>${info.title}</b><br>
+              <small>${info.authors ? info.authors.join(", ") : "Автор неизвестен"}</small>
+              <p>${info.description ? info.description.substring(0, 90) + "..." : "Нет описания"}</p>
+
+              <button class="btn"
+                onclick='event.stopPropagation(); addFavorite(${JSON.stringify(info).replace(/"/g,"&quot;")})'>
+                ⭐ Добавить
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+  } catch (e) {
+    console.log(e);
+    document.getElementById("loading").innerHTML = "❌ Ошибка";
+  }
+}
+
+/* 📖 открыть книгу */
+function openBook(link) {
+  if (!link) {
+    alert("Нет доступного чтения 😢");
+    return;
+  }
+  window.open(link, "_blank");
+}
+
+/* ⭐ добавить в избранное (без дублей) */
+function addFavorite(book) {
+  const exists = favorites.some(b => b.title === book.title);
+  if (exists) return;
+
+  favorites.push(book);
+  localStorage.setItem("favBooks", JSON.stringify(favorites));
+  renderFavorites();
+}
+
+/* ❌ удалить из избранного */
+function removeFavorite(index) {
+  favorites = favorites.filter((_, i) => i !== index);
+  localStorage.setItem("favBooks", JSON.stringify(favorites));
+  renderFavorites();
+}
+
+/* ⭐ показать избранное */
+function renderFavorites() {
+  const fav = document.getElementById("fav");
+  fav.innerHTML = "";
+
+  if (!favorites.length) {
+    fav.innerHTML = "Пока пусто";
+    return;
+  }
+
+  favorites.forEach((book, index) => {
+    fav.innerHTML += `
+      <div class="book">
+        <img src="${book.imageLinks?.thumbnail || ''}">
+        <div>
+          <b>${book.title}</b><br>
+          <small>${book.authors ? book.authors.join(", ") : ""}</small>
+
+          <button class="btn-del" onclick="removeFavorite(${index})">
+            ❌ Удалить
+          </button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+renderFavorites();
+</script>
+
+</body>
+</html>

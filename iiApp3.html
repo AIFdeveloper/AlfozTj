@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alfoz AI PRO Voice</title>
+
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
+
+body{
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+/* CHAT */
+.chat{
+  width:420px;
+  max-width:95%;
+  height:90vh;
+  background:#111827;
+  border-radius:16px;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* HEADER */
+header{
+  background:#1f2937;
+  padding:12px;
+  color:white;
+  font-weight:bold;
+}
+
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* MESSAGES */
+#messages{
+  flex:1;
+  padding:10px;
+  overflow-y:auto;
+  color:white;
+  padding-bottom:120px;
+}
+
+.user{
+  text-align:right;
+  margin:8px 0;
+  color:#60a5fa;
+}
+
+.bot{
+  text-align:left;
+  margin:8px 0;
+  color:#34d399;
+}
+
+/* INPUT AREA */
+.input-area{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:420px;
+  max-width:95%;
+  background:#1f2937;
+  padding:10px;
+  display:flex;
+  gap:6px;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
+
+input{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  outline:none;
+}
+
+button{
+  padding:10px 12px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#3b82f6;
+  color:white;
+}
+
+button:hover{
+  background:#2563eb;
+}
+
+.voice-panel{
+  position:fixed;
+  bottom:60px;
+  left:50%;
+  transform:translateX(-50%);
+  width:420px;
+  max-width:95%;
+  background:#111827;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+.voice-panel select{
+  flex:1;
+  margin-right:8px;
+  padding:6px;
+  border-radius:6px;
+  border:none;
+}
+
+.voice-panel button{
+  padding:6px 10px;
+  border-radius:6px;
+  border:none;
+  background:#3b82f6;
+  color:white;
+}
+
+@media(max-width:500px){
+  .chat{
+    width:100%;
+    height:100vh;
+    border-radius:0;
+  }
+
+  .input-area,
+  .voice-panel{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat">
+
+  <header>
+    <div class="top-bar">
+      💬 Alfoz AI Voice PRO
+    </div>
+  </header>
+
+  <div id="messages"></div>
+
+</div>
+
+<!-- VOICE PANEL -->
+<div class="voice-panel">
+  <select id="voiceSelect"></select>
+  <button onclick="toggleVoice()" id="voiceBtn">🔇</button>
+</div>
+
+<!-- INPUT -->
+<div class="input-area">
+  <input type="text" id="input" placeholder="Напиши сообщение...">
+  <button onclick="startVoice()">🎤</button>
+  <button onclick="sendMessage()">➤</button>
+</div>
+
+<script>
+  let voiceEnabled = false;
+let voices = [];
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition;
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.lang = "ru-RU";
+}
+
+// загрузка голосов
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+
+  const select = document.getElementById("voiceSelect");
+  select.innerHTML = "";
+
+  voices.forEach((v, i) => {
+    let opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = v.name + " (" + v.lang + ")";
+    select.appendChild(opt);
+  });
+}
+
+speechSynthesis.onvoiceschanged = loadVoices;
+
+// 📩 SEND MESSAGE
+async function sendMessage(){
+
+  const input = document.getElementById("input");
+  const message = input.value.trim();
+  if(!message) return;
+
+  const messages = document.getElementById("messages");
+
+  messages.innerHTML += `<div class="user">👤 ${escapeHtml(message)}</div>`;
+  input.value="";
+
+  const id = "l"+Date.now();
+  messages.innerHTML += `<div class="bot" id="${id}">🤖 думает...</div>`;
+
+  try{
+    const res = await fetch("http://localhost:3000/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: message
+      })
+    });
+
+    const data = await res.json();
+
+    document.getElementById(id).remove();
+
+    const reply = data.choices?.[0]?.message?.content || "Нет ответа";
+
+    messages.innerHTML += `<div class="bot">🤖 ${escapeHtml(reply)}</div>`;
+
+    if(voiceEnabled){
+      speechSynthesis.cancel();
+
+      const speech = new SpeechSynthesisUtterance(reply);
+      speech.lang = "ru-RU";
+      speech.rate = 1;
+
+      const v = voices[document.getElementById("voiceSelect").value];
+      if(v) speech.voice = v;
+
+      setTimeout(()=>speechSynthesis.speak(speech),100);
+    }
+
+    messages.scrollTop = messages.scrollHeight;
+
+  }catch(e){
+    document.getElementById(id).remove();
+    messages.innerHTML += `<div class="bot">❌ ошибка</div>`;
+  }
+}
+
+// 🔊 toggle voice
+function toggleVoice(){
+  voiceEnabled = !voiceEnabled;
+  document.getElementById("voiceBtn").textContent = voiceEnabled ? "🔊" : "🔇";
+  if(!voiceEnabled) speechSynthesis.cancel();
+}
+
+// 🎤 voice input
+function startVoice(){
+  if(!recognition) return alert("Голос не работает");
+
+  recognition.start();
+
+  recognition.onresult = (e)=>{
+    document.getElementById("input").value = e.results[0][0].transcript;
+    sendMessage();
+  };
+}
+
+// escape HTML
+function escapeHtml(text){
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+</script>
+
+</body>
+</html>
