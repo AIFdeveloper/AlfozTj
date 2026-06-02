@@ -27,6 +27,37 @@ html, body {
   color: var(--text);
 }
 
+.logo-img {
+  width: 40px;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* 📱 мобильная версия */
+@media (max-width: 768px) {
+  .logo-img {
+    width: 32px;   /* уменьшаем логотип */
+    margin-right: 6px;
+  }
+
+  .brand span {
+    font-size: 14px; /* текст ALFOZ меньше */
+  }
+}
+
+/* 📱 очень маленькие телефоны */
+@media (max-width: 480px) {
+  .logo-img {
+    width: 28px;
+  }
+
+  .brand span {
+    font-size: 13px;
+  }
+}
+
 .menu-toggle {
   display: none;
   font-size: 28px;
